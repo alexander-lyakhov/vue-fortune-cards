@@ -16,6 +16,7 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
+    extensions: ['.mjs', '.js', '.ts', '.d.ts', '.jsx', '.tsx', '.json', '.vue'],
   },
   base: process.env.NODE_ENV === 'production' ? '/vue-fortne-cards/' : '/',
 })

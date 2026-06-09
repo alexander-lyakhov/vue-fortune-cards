@@ -1,9 +1,22 @@
 import axios from './AxiosInstance'
+export { isLoading } from './AxiosInstance'
 
-export function getDecks() {
-	return axios.get('https://fortunecards-b2gmfjgkg4dteag4.westeurope-01.azurewebsites.net/api/decks')
+export async function getDecks() {
+  try {
+    const { data } = await axios.get('/decks')
+    return {
+      data,
+      error: null
+    }
+  }
+  catch(error) {
+    return {
+      data: null,
+      error
+    }
+  }
 }
 
 export default {
-	getDecks,
+  getDecks,
 }
