@@ -2,19 +2,16 @@ import axios from './AxiosInstance'
 export { isLoading } from './AxiosInstance'
 
 export async function getDecks() {
-  try {
-    const { data } = await axios.get('/decks')
-    return {
-      data,
-      error: null
-    }
-  }
-  catch(error) {
-    return {
+  return axios.get('/decks').then(
+    ({ data }) => ({
+       data,
+       error: null,
+    }),
+    (error) => ({
       data: null,
       error
-    }
-  }
+    })
+  )
 }
 
 export default {
