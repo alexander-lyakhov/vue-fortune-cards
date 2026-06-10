@@ -6,7 +6,7 @@
   </navbar>
   <main class="page-content">
     <div class="list-header">
-      <h1 class="l1ist-title">My Decks ✨</h1>
+      <h1 class="list-title">My Decks ✨</h1>
       <p class="list-subtitle" v-if="!isLoading"> {{ decks?.data?.length }} deck{{ decks?.data?.length === 1 ? '' : 's'  }}</p>
     </div>
 
