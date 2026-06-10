@@ -1,6 +1,11 @@
 <template>
   <nav class="nav-bar">
-    <span class="nav-title">🎴 FortuneCards !!!</span>
+    <span class="nav-title">
+    <slot name="breadcrambs"></slot>
+    </span>
+    <span class="nav-title-centered">
+      <slot></slot>
+    </span>
     <div class="actions">
       <slot name="actions">
       </slot>

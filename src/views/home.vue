@@ -1,5 +1,6 @@
 <template>
   <navbar>
+    FortuneCards 🎴
     <template #actions>
       <button class="btn-primary">+ New Deck</button>
     </template>
@@ -41,7 +42,7 @@
 <script setup lang="ts">
   // @@@ @js@
   import { ref, onMounted }      from 'vue';
-  import Navbar                  from '@/components/nav-bar.vue'
+  import Navbar                  from '@/components/navbar.vue'
   import api, { isLoading }      from '@/api'
   import type { Deck, Response } from '@/types'
   import {
