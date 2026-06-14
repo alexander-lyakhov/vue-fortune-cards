@@ -15,7 +15,7 @@ export async function getDeckList() {
 }
 
 export async function getDeckById(id: number | string) {
-  return axios.get(`/decks/${id}`).then(
+  return axios.get(`decks/${id}`).then(
     ({ data }) => ({
        data,
        error: null,

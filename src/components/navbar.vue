@@ -7,8 +7,7 @@
       <slot></slot>
     </span>
     <div class="actions">
-      <slot name="actions">
-      </slot>
+      <slot name="actions"></slot>
       <a class="theme-toggle" v-if="isDarkMode" href="#" @click.prevent="setLightTheme">&#127774;</a>
       <a class="theme-toggle" v-else href="#" @click.prevent="setDarkTheme">&#127769;</a>
     </div>
@@ -27,10 +26,6 @@
   onMounted(() => {
     isDarkMode.value = document.documentElement.hasAttribute("theme")
   })
-
-  /***
-  **** @@@ Computed
-  ***/
 
   /***
   **** @@@ Methods
