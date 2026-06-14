@@ -10,8 +10,7 @@ import type {
 export const isLoading = ref<boolean>(false)
 
 const axiosInstance: AxiosInstance = axios.create({
-  // baseURL: import.meta.env.BASE_URL,
-  baseURL: 'https://fortunecards-b2gmfjgkg4dteag4.westeurope-01.azurewebsites.net/api',
+  baseURL: import.meta.env.VITE_BASE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },

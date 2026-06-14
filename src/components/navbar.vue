@@ -1,8 +1,8 @@
 <template>
   <nav class="nav-bar">
-    <span class="nav-title">
-    <slot name="breadcrambs"></slot>
-    </span>
+    <div class="nav-actions">
+      <slot name="breadcrambs"></slot>
+    </div>
     <span class="nav-title-centered">
       <slot></slot>
     </span>
@@ -56,5 +56,10 @@
 /* @@@ @SCSS@ */
 .theme-toggle {
   margin-left: 12px;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 </style>

@@ -20,6 +20,7 @@
         v-for="deck in decks?.data"
         :key="deck.id"
         :style="getDeckStyles(deck.colorIndex)"
+        @click="$router.push({name: 'deck', params: {id: deck.id}})"
       >
         <span class="deck-emoji">{{ deck.emoji }}</span>
         <span class="deck-name">{{ deck.name }}</span>
@@ -56,7 +57,7 @@
   **** @@@ Hooks
   ***/
   onMounted(async () => {
-    decks.value = await api.getDecks()
+    decks.value = await api.getDeckList()
     console.log('res', decks.value)
   })
 
