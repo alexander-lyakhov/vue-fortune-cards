@@ -1,12 +1,10 @@
 <template>
-  <div v-if="isLoading" class="state-loading">Loading decks…</div>
-
-  <template v-else>
+  <Request :endpoint="() => api.getDeckById(deckId)" v-slot="{ data: deck, error }">
     <navbar>
       <template #breadcrambs>
         <button class="nav-back" @click="$router.push('/')">← My Decks</button>
         <span class="nav-sep">/</span>
-        <span class="nav-crumb">{{ deck?.data?.name }}</span>
+        <span class="nav-crumb">{{ deck?.name }}</span>
       </template>
 
       <template #actions>
@@ -15,29 +13,27 @@
       </template>
     </navbar>
 
-    <div class="deck-hero" :style="getDeckStyles(deck?.data?.colorIndex)">
-      <span class="hero-emoji">{{ deck?.data?.emoji }}</span>
+    <div v-if="!error" class="deck-hero" :style="getDeckStyles(deck?.colorIndex)">
+      <span class="hero-emoji">{{ deck?.emoji }}</span>
       <div class="hero-info">
-        <h1 class="hero-name">{{ deck?.data?.name }}</h1>
+        <h1 class="hero-name">{{ deck?.name }}</h1>
         <p class="hero-meta">
-          <span v-if="deck?.data?.description">{{ deck?.data?.description }} · </span>
-          {{ (deck?.data?.cards ?? []).length }} card{{ (deck?.data?.cards ?? []).length === 1 ? '' : 's' }}
+          <span v-if="deck?.data?.description">{{ deck?.description }} · </span>
+          {{ (deck?.cards ?? []).length }} card{{ (deck?.cards ?? []).length === 1 ? '' : 's' }}
         </p>
       </div>
     </div>
 
-    <div v-if="deck?.error" class="state-error">{{ deck?.error }}</div>
-
-    <main v-else class="page-content">
+    <main v-if="!error" class="page-content">
       <h2 class="section-title">Cards in this deck</h2>
 
       <div class="card-grid">
         <div
           class="card-tile"
-          v-for="(card, index) in deck?.data?.cards || []"
+          v-for="(card, index) in deck?.cards || []"
           :key="card.id"
         >
-          <div class="card-image" :style="getCardAccent(index) + '18'">
+          <div class="card-image" :style="getCardAccent(index as number)">
             <img v-if="card?.imageUrl" :src="`${baseUrl}/${card?.imageUrl}`" :alt="card?.title" />
             <span v-else class="card-placeholder">🃏</span>
           </div>
@@ -52,39 +48,28 @@
         </div>
       </div>
     </main>
-  </template>
+  </Request>
 </template>
 
 <script setup lang="ts">
   // @@@ @js@
-  import { ref, computed, watchEffect } from 'vue';
-  import { useRoute }                   from 'vue-router'
-  import Navbar                         from '@/components/navbar.vue'
-  import Request                        from '@/components/request.vue'
-  import api, { isLoading }             from '@/api'
-  import type { Deck, Response }        from '@/types'
+  import { computed } from 'vue';
+  import { useRoute } from 'vue-router'
+  import Navbar       from '@/components/navbar.vue'
+  import Request      from '@/components/request.vue'
+  import api          from '@/api'
   import {
     getDeckGradientStyle,
     getCardAccentColor,
   } from '@/utils/deck'
 
   const baseUrl = import.meta.env.VITE_BASE_URL
-  const deck    = ref<Response<Deck>>()
   const $route  = useRoute()
 
   /***
   **** @@@ Computed
   ***/
   const deckId = computed(() => Number($route?.params?.id))
-
-  /***
-  **** @@@ Hooks
-  ***/
-  /*watchEffect(async () => {
-    if (deckId?.value) {
-      deck.value = await api.getDeckById(deckId.value)
-    }
-  })*/
 
   /***
   **** @@@ Methods
