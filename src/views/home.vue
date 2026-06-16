@@ -6,7 +6,7 @@
     </template>
   </navbar>
   <main class="page-content">
-    <Request :endpoint="api.getDeckList" v-slot="{ data: decks, error }">
+    <Request :endpoint="() => api.getDeckList<Deck[] | undefined>()" v-slot="{ data: decks, error }">
       <div v-if="!error" class="list-header">
         <h1 class="list-title">My Decks ✨</h1>
         <p class="list-subtitle"> {{ decks?.length }} deck{{ decks?.length === 1 ? '' : 's'  }}</p>
@@ -30,7 +30,7 @@
           >✕</button>
         </div>
 
-        <div class="deck-tile deck-tile--add">
+        <div v-if="!error" class="deck-tile deck-tile--add">
           <span class="deck-add-icon">+</span>
           <span class="deck-add-label">New Deck</span>
         </div>
@@ -41,10 +41,10 @@
 
 <script setup lang="ts">
   // @@@ @js@
-  import Navbar  from '@/components/navbar.vue'
-  import Request from '@/components/request.vue'
-  import api     from '@/api'
-  // import type { Response, Deck } from '@/types'
+  import Navbar        from '@/components/navbar.vue'
+  import Request       from '@/components/request.vue'
+  import api           from '@/api'
+  import type { Deck } from '@/types'
   import {
     getDeckGradientStyle,
     getDeckShadowStyle,

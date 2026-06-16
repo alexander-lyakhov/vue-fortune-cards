@@ -1,5 +1,5 @@
 <template>
-  <Request :endpoint="() => api.getDeckById(deckId)" v-slot="{ data: deck, error }">
+  <Request :endpoint="() => api.getDeckById<Deck | undefined>(deckId)" v-slot="{ data: deck, error }">
     <navbar>
       <template #breadcrambs>
         <button class="nav-back" @click="$router.push('/')">← My Decks</button>
@@ -18,11 +18,13 @@
       <div class="hero-info">
         <h1 class="hero-name">{{ deck?.name }}</h1>
         <p class="hero-meta">
-          <span v-if="deck?.data?.description">{{ deck?.description }} · </span>
+          <span v-if="deck?.description">{{ deck?.description }} · </span>
           {{ (deck?.cards ?? []).length }} card{{ (deck?.cards ?? []).length === 1 ? '' : 's' }}
         </p>
       </div>
     </div>
+
+    <pre>{{ error }}</pre>
 
     <main v-if="!error" class="page-content">
       <h2 class="section-title">Cards in this deck</h2>
@@ -53,15 +55,17 @@
 
 <script setup lang="ts">
   // @@@ @js@
-  import { computed } from 'vue';
-  import { useRoute } from 'vue-router'
-  import Navbar       from '@/components/navbar.vue'
-  import Request      from '@/components/request.vue'
-  import api          from '@/api'
+  import { computed }  from 'vue';
+  import { useRoute }  from 'vue-router'
+  import Navbar        from '@/components/navbar.vue'
+  import Request       from '@/components/request.vue'
+  import api           from '@/api'
+  import type { Deck } from '@/types'
   import {
     getDeckGradientStyle,
     getCardAccentColor,
   } from '@/utils/deck'
+  //import type { Deck } from '@/types';
 
   const baseUrl = import.meta.env.VITE_BASE_URL
   const $route  = useRoute()

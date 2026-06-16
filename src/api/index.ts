@@ -1,8 +1,9 @@
-import axios from './AxiosInstance'
+import axios             from './AxiosInstance'
+import type { Response } from '@/types'
 export { isLoading } from './AxiosInstance'
 
-export async function getDeckList() {
-  return axios.get('/decks').then(
+export async function getDeckList<T>(): Promise<Response<T>> {
+  return axios.get<T>('/decks').then(
     ({ data }) => ({
        data,
        error: null,
@@ -14,8 +15,8 @@ export async function getDeckList() {
   )
 }
 
-export async function getDeckById(id: number | string) {
-  return axios.get(`decks/${id}`).then(
+export async function getDeckById<T>(id: number | string): Promise<Response<T>> {
+  return axios.get<T>(`decks/${id}`).then(
     ({ data }) => ({
        data,
        error: null,
