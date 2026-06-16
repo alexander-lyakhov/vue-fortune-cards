@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div v-if="decks?.error" class="state-error">{{ deck?.error }}</div>
+    <div v-if="deck?.error" class="state-error">{{ deck?.error }}</div>
 
     <main v-else class="page-content">
       <h2 class="section-title">Cards in this deck</h2>
@@ -60,6 +60,7 @@
   import { ref, computed, watchEffect } from 'vue';
   import { useRoute }                   from 'vue-router'
   import Navbar                         from '@/components/navbar.vue'
+  import Request                        from '@/components/request.vue'
   import api, { isLoading }             from '@/api'
   import type { Deck, Response }        from '@/types'
   import {
@@ -79,11 +80,11 @@
   /***
   **** @@@ Hooks
   ***/
-  watchEffect(async () => {
+  /*watchEffect(async () => {
     if (deckId?.value) {
       deck.value = await api.getDeckById(deckId.value)
     }
-  })
+  })*/
 
   /***
   **** @@@ Methods
